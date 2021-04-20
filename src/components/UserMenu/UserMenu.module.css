@@ -4,11 +4,8 @@
     align-items: 'center';
   };
 
-.avatar {
-    margin-right: 4;
-  };
 
-.name {
+.email {
     font-weight: 700;
     margin-right: 12;
   }

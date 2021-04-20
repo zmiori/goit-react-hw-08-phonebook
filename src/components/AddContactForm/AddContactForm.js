@@ -25,11 +25,7 @@ class AddContactForm extends Component {
     const { contacts, onSubmit } = this.props;
     e.preventDefault();
 
-    if (
-      contacts.find(
-        contact => contact.name === this.state.name,
-      )
-    ) {
+    if (contacts.find(contact => contact.name === this.state.name)) {
       alert(`${this.state.name} is already in contacts`);
       return;
     }
@@ -42,13 +38,11 @@ class AddContactForm extends Component {
     const { name, number } = this.state;
 
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        className={s.addContactForm}
-      >
+      <form onSubmit={this.handleSubmit} className={s.addContactForm}>
         <div className={s.formItem}>
           <label htmlFor={this.nameInputId}>Name</label>
           <input
+            className="form-control"
             type="text"
             placeholder="Enter name"
             name="name"
@@ -58,11 +52,9 @@ class AddContactForm extends Component {
           />
         </div>
         <div className={s.formItem}>
-          <label htmlFor={this.numberInputId}>
-            {' '}
-            Number{' '}
-          </label>
+          <label htmlFor={this.numberInputId}> Number </label>
           <input
+            className="form-control"
             type="tel"
             placeholder="Enter phone number"
             name="number"

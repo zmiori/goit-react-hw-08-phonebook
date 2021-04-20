@@ -5,6 +5,9 @@ import {
   loginSuccess,
   logoutSuccess,
   registerSuccess,
+  loginError,
+  logoutError,
+  registerError,
   getCurrentUserRequest,
   getCurrentUserSuccess,
   getCurrentUserError,
@@ -12,8 +15,8 @@ import {
 
 const initialUserState = { name: null, email: null };
 const userReducer = createReducer(initialUserState, {
-  [registerSuccess]: (_, { payload }) => payload,
-  [loginSuccess]: (_, { payload }) => payload,
+  [registerSuccess]: (_, { payload }) => payload.user,
+  [loginSuccess]: (_, { payload }) => payload.user,
   [logoutSuccess]: () => ({ name: null, email: null }),
   [getCurrentUserSuccess]: (_, { payload }) => payload,
 });
@@ -21,7 +24,10 @@ const userReducer = createReducer(initialUserState, {
 const initialTokenState = null;
 const tokenReducer = createReducer(initialTokenState, {
   [registerSuccess]: (_, { payload }) => payload.token,
-  [loginSuccess]: (_, { payload }) => payload.token,
+  [loginSuccess]: (_, { payload }) => {
+    console.log(payload);
+    return payload.token;
+  },
   [logoutSuccess]: () => null,
 });
 
@@ -30,6 +36,10 @@ const isLoggedInReducer = createReducer(false, {
   [loginSuccess]: () => true,
   [logoutSuccess]: () => false,
   [getCurrentUserSuccess]: () => true,
+  [registerError]: () => false,
+  [loginError]: () => false,
+  [logoutError]: () => true,
+  [getCurrentUserError]: () => false,
 });
 
 const isFetchingCurrentUserReduser = createReducer(false, {

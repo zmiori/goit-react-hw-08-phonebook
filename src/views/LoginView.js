@@ -1,44 +1,81 @@
-import React from 'react';
+import { useState } from 'react';
+import { connect } from 'react-redux';
 
 import s from '../components/AddContactForm/AddContactForm.module.css';
 
-export default function LoginView() {
+import { login } from '../redux/auth/auth-operations';
+
+function LoginView({ onSubmitLogin }) {
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handlePasswordChange = e => {
+    setPassword(e.currentTarget.value);
+    return password;
+  };
+
+  const handleEmailChange = e => {
+    setEmail(e.currentTarget.value);
+    return email;
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const user = {
+      email,
+      password,
+    };
+    // console.log(user);
+    onSubmitLogin(user);
+    setPassword('');
+    setEmail('');
+  };
+
   return (
-    <div>
-      <h1>Login</h1>
+    <div className={s.wrapper}>
+      <h1 className="display-6">Login</h1>
 
       <form
         className={s.wrapper}
-        onSubmit={() => {}}
+        onSubmit={e => handleSubmit(e)}
         autoComplete="off"
       >
         <label className={s.formItem}>
           Email
           <input
+            className="form-control"
+            placeholder="Email"
             type="email"
             name="email"
-            // value={}
-            // onChange={}
+            value={email}
+            onChange={e => handleEmailChange(e)}
           />
         </label>
 
         <label className={s.formItem}>
           Password
           <input
+            className="form-control"
+            placeholder="Password"
             type="password"
             name="password"
-            // value={}
-            // onChange={}
+            value={password}
+            onChange={e => handlePasswordChange(e)}
           />
         </label>
 
-        <button
-          type="submit"
-          className={`btn btn-success ${s.formBtn}`}
-        >
+        <button type="submit" className={`btn btn-success ${s.formBtn}`}>
           Login
         </button>
       </form>
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitLogin: value => dispatch(login(value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LoginView);

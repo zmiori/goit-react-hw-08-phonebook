@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import Navigation from '../Navigation/';
@@ -6,9 +7,9 @@ import s from './NavBar.module.css';
 
 import UserMenu from '../UserMenu';
 import AuthNav from '../AuthNav';
+import { getAuthIsLoggedIn } from '../../redux/auth/auth-selectors';
 
-export default function NavBar() {
-  const isLoggedIn = false;
+function NavBar({ isLoggedIn }) {
   return (
     <header className={s.header}>
       <Navigation />
@@ -20,3 +21,9 @@ export default function NavBar() {
     </header>
   );
 }
+
+const mapStateToProps = state => {
+  return { isLoggedIn: getAuthIsLoggedIn(state) };
+};
+
+export default connect(mapStateToProps, null)(NavBar);
